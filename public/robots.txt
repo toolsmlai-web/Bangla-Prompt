@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /settings/
+Disallow: /login
+Disallow: /register
+
+Sitemap: https://banglaprompts.com/sitemap.xml
+Sitemap: https://banglaprompts.com/sitemap-bn.xml
