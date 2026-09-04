@@ -1,7 +1,4 @@
-import { loadEnvConfig } from "@next/env";
 import NextAuth from "next-auth";
-
-loadEnvConfig(process.cwd());
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
 import { isUniqueConstraintViolation } from "@/lib/db-errors";
