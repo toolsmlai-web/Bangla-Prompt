@@ -142,7 +142,10 @@ async function buildAuthConfig() {
   return {
     // Auth.js v5 does not infer NEXTAUTH_SECRET in every runtime.
     // Pass it explicitly so session and API requests never fail with MissingSecret.
-    secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+    secret:
+      process.env.AUTH_SECRET ??
+      process.env.NEXTAUTH_SECRET ??
+      (process.env.NODE_ENV === "development" ? "local-development-secret" : undefined),
     adapter: CustomPrismaAdapter(),
     providers: authProviders,
     session: {
