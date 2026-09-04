@@ -1,7 +1,7 @@
 import { defineConfig } from "@/lib/config";
 
 // Set to true to use clone branding (hide prompts.chat repo branding)
-const useCloneBranding = false;
+const useCloneBranding = true;
 
 export default defineConfig({
   // Branding - customize for white-label
