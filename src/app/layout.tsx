@@ -38,8 +38,21 @@ const playfairDisplay = Playfair_Display({
   style: ["normal", "italic"],
 });
 
+const siteUrl = (() => {
+  const configuredUrl = process.env.NEXTAUTH_URL?.trim();
+  if (!configuredUrl) return "http://localhost:3000";
+
+  try {
+    return new URL(
+      configuredUrl.match(/^https?:\/\//i) ? configuredUrl : `https://${configuredUrl}`,
+    ).origin;
+  } catch {
+    return "http://localhost:3000";
+  }
+})();
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "prompts.chat - AI Prompts Community",
     template: "%s | prompts.chat",
@@ -109,7 +122,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: process.env.NEXTAUTH_URL || "https://prompts.chat",
+    canonical: siteUrl,
   },
 };
 
