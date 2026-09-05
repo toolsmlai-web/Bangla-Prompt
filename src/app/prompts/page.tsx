@@ -273,16 +273,22 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
     }
 
     // Fetch initial prompts (first page) - cached
-    const result = await getCachedPrompts(where, orderBy, perPage);
-    prompts = result.prompts;
-    total = result.total;
+    try {
+      const result = await getCachedPrompts(where, orderBy, perPage);
+      prompts = result.prompts;
+      total = result.total;
+    } catch {
+      // Keep the public browse page usable while the database is unavailable.
+      prompts = [];
+      total = 0;
+    }
   }
 
   // Fetch categories, pinned categories, and tags for filter
   const [categories, pinnedCategories, tags] = await Promise.all([
-    getCategories(),
-    getPinnedCategories(),
-    getTags(),
+    getCategories().catch(() => []),
+    getPinnedCategories().catch(() => []),
+    getTags().catch(() => []),
   ]);
 
   return (

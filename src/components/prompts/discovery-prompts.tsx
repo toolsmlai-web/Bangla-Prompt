@@ -47,7 +47,7 @@ export async function DiscoveryPrompts({ isHomepage = false }: DiscoveryPromptsP
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const [featuredPromptsRaw, todaysMostUpvotedRaw, latestPromptsRaw, recentlyUpdatedRaw, mostContributedRaw] = await Promise.all([
+  const discoveryData = await Promise.all([
     db.prompt.findMany({
       where: {
         isPrivate: false,
@@ -115,7 +115,13 @@ export async function DiscoveryPrompts({ isHomepage = false }: DiscoveryPromptsP
       take: limit,
       include: promptInclude,
     }),
-  ]);
+  ]).catch(() => null);
+
+  if (!discoveryData) {
+    return null;
+  }
+
+  const [featuredPromptsRaw, todaysMostUpvotedRaw, latestPromptsRaw, recentlyUpdatedRaw, mostContributedRaw] = discoveryData;
 
   const mapPrompt = (p: typeof featuredPromptsRaw[0]) => ({
     ...p,
