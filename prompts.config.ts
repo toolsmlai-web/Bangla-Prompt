@@ -35,9 +35,9 @@ export default defineConfig({
   auth: {
     // Available: "credentials" | "google" | "azure" | "github" | "apple" | "oidc" | "oauth" | custom
     // Use `providers` array to enable multiple auth providers
-    providers: ["github", "google", "apple"],
-    // Allow public registration (only applies to credentials provider)
-    allowRegistration: false,
+    providers: ["credentials"],
+    // Enable email/password sign-in when OAuth credentials are not configured.
+    allowRegistration: true,
   },
 
   // Internationalization

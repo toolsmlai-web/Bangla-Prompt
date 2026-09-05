@@ -24,9 +24,10 @@ export const credentialsPlugin: AuthPlugin = {
         if (!parsed.success) return null;
 
         const { email, password } = parsed.data;
+        const normalizedEmail = email.trim().toLowerCase();
 
         const user = await db.user.findUnique({
-          where: { email },
+          where: { email: normalizedEmail },
         });
 
         if (!user || !user.password) return null;
